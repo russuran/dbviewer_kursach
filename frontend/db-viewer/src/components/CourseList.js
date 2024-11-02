@@ -17,8 +17,8 @@ const CourseList = () => {
     return (
         <div style={{ padding: '8px'}}>
             <h2>Курсы</h2>
-            <DataTable value={courses} paginator rows={10}>
-                <Column field="name" header="Course Name" />
+            <DataTable removableSort value={courses} paginator rows={10}>
+                <Column sortable field="name" header="Course Name" />
             </DataTable>
         </div>
     );

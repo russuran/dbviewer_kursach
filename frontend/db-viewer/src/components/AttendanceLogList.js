@@ -17,11 +17,11 @@ const AttendanceLogList = () => {
     return (
         <div style={{ padding: '8px'}}>
             <h2>Посещаемость</h2>
-            <DataTable value={attendanceLogs} paginator rows={10}>
-                <Column field="attendance_id" header="Attendance ID" />
-                <Column field="student_login" header="Student Login" />
-                <Column field="lesson_id" header="Lesson ID" />
-                <Column field="status" header="Status" />
+            <DataTable removableSort value={attendanceLogs} paginator rows={10}>
+                <Column sortable field="attendance_id" header="Attendance ID" />
+                <Column sortable field="student_login" header="Student Login" />
+                <Column sortable field="lesson_id" header="Lesson ID" />
+                <Column sortable field="status" header="Status" />
             </DataTable>
         </div>
     );

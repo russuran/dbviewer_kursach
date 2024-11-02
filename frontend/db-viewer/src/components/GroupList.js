@@ -17,8 +17,8 @@ const GroupList = () => {
     return (
         <div style={{ padding: '8px'}}>
             <h2>Группы</h2>
-            <DataTable value={groups} paginator rows={10}>
-                <Column field="group_number" header="Group Number" />
+            <DataTable removableSort value={groups} paginator rows={10}>
+                <Column sortable field="group_number" header="Group Number" />
             </DataTable>
         </div>
     );

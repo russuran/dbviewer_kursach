@@ -17,11 +17,11 @@ const PerformanceList = () => {
     return (
         <div style={{ padding: '8px'}}>
             <h2>Успеваемость</h2>
-            <DataTable value={performances} paginator rows={10}>
-                <Column field="performance_id" header="Performance ID" />
-                <Column field="student_login" header="Student Login" />
-                <Column field="course_name" header="Course Name" />
-                <Column field="grade" header="Grade" />
+            <DataTable removableSort value={performances} paginator rows={10}>
+                <Column sortable field="performance_id" header="Performance ID" />
+                <Column sortable field="student_login" header="Student Login" />
+                <Column sortable field="course_name" header="Course Name" />
+                <Column sortable field="grade" header="Grade" />
             </DataTable>
         </div>
     );

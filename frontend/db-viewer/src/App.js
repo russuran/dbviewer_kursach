@@ -6,6 +6,12 @@ import CourseList from './components/CourseList';
 import GroupList from './components/GroupList';
 import PerformanceList from './components/PerformanceList';
 import AttendanceLogList from './components/AttendanceLogList';
+import LessonList from './components/LessonList'
+import ContentList from './components/ContentList'
+import ScheduleList from './components/ScheduleList'
+import TeacherList from './components/TeacherList'
+import StudyMaterialList from './components/StudyMaterialList'
+
 
 const App = () => {
     return (
@@ -18,7 +24,12 @@ const App = () => {
                     <Route path="/groups" element={<GroupList />} />
                     <Route path="/performances" element={<PerformanceList />} />
                     <Route path="/attendance_logs" element={<AttendanceLogList />} />
-                    <Route path="/" element={<h1>Welcome to the School Management System</h1>} />
+                    <Route path="/lessons" element={<LessonList />} />
+                    <Route path="/contents" element={<ContentList />} />
+                    <Route path="/schedule" element={<ScheduleList />} />
+                    <Route path="/teachers" element={<TeacherList />} />
+                    <Route path="/sml" element={<StudyMaterialList />} />
+                    <Route path="/" element={<h1>Система менеджмента учащихся v1</h1>} />
                 </Routes>
             </div>
         </div>
