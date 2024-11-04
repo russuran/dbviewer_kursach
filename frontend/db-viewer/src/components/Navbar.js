@@ -53,6 +53,11 @@ const Navbar = () => {
             label: 'Содержание',
             icon: 'pi pi-fw pi-paperclip',
             path: '/contents'
+        },
+        {
+            label: 'Расписание',
+            icon: 'pi pi-fw pi-paperclip',
+            path: '/schedule'
         }
     ];
 

@@ -31,27 +31,36 @@ const StudentList = () => {
     }, []);
 
     const handleEdit = (student) => {
-        // Реализуйте вашу логику редактирования здесь
         console.log("Редактировать студента:", student);
-        // Например, вы можете открыть модальное окно или перейти на страницу редактирования
     };
 
     const header = (
         <div className="table-header">
-            <h2>Студенты</h2>
+            <h2>Список студентов</h2>
             <span className="p-input-icon-left">
-                <i className="pi pi-search" />
                 <InputText
                     type="search"
                     onInput={(e) => setFilters(prevFilters => ({
                         ...prevFilters,
                         global: { value: e.target.value, matchMode: 'contains' }
                     }))}
-                    placeholder="Поиск..."
+                    placeholder="Поиск"
                 />
             </span>
         </div>
     );
+
+    const filterMatchModeOptions = {
+        text: [
+            { label: 'Содержит', value: 'contains' },
+            { label: 'Начинается с', value: 'startsWith' },
+            { label: 'Заканчивается на', value: 'endsWith' },
+            { label: 'Равно', value: 'equals' },
+            { label: 'Не равно', value: 'notEquals' },
+            { label: 'Не содержит', value: 'notContains' },
+            { label: 'Без фильтра', value: 'noFilter' }
+        ]
+    };
 
     return (
         <div style={{ padding: '8px' }}>
@@ -72,6 +81,7 @@ const StudentList = () => {
                     filter
                     filterPlaceholder="Поиск по ФИО"
                     style={{ minWidth: '12rem' }}
+                    filterMatchModeOptions={filterMatchModeOptions.text}
                 />
                 <Column
                     field="login"
@@ -79,6 +89,7 @@ const StudentList = () => {
                     filter
                     filterPlaceholder="Поиск по логину"
                     style={{ minWidth: '12rem' }}
+                    filterMatchModeOptions={filterMatchModeOptions.text}
                 />
                 <Column
                     field="contact_info"
@@ -86,6 +97,7 @@ const StudentList = () => {
                     filter
                     filterPlaceholder="Поиск по контактной информации"
                     style={{ minWidth: '12rem' }}
+                    filterMatchModeOptions={filterMatchModeOptions.text}
                 />
                 <Column
                     header="Действия"

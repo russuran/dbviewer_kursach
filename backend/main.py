@@ -385,3 +385,43 @@ def delete_attendance_log(attendance_id: int, db: Session = Depends(get_db)):
     db.delete(db_attendance_log)
     db.commit()
     return db_attendance_log
+
+@app.post("/contents/", response_model=schemas.Content)
+def create_content(content: schemas.ContentCreate, db: Session = Depends(get_db)):
+    db_content = models.Content(**content.dict())
+    db.add(db_content)
+    db.commit()
+    db.refresh(db_content)
+    return db_content
+
+@app.get("/contents/{content_id}", response_model=schemas.Content)
+def read_content(content_id: int, db: Session = Depends(get_db)):
+    db_content = db.query(models.Content).filter(models.Content.material_id == content_id).first()
+    if db_content is None:
+        raise HTTPException(status_code=404, detail="Content not found")
+    return db_content
+
+@app.get("/contents/", response_model=list[schemas.Content])
+def read_contents(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    contents = db.query(models.Content).offset(skip).limit(limit).all()
+    return contents
+
+@app.put("/contents/{content_id}", response_model=schemas.Content)
+def update_content(content_id: int, content: schemas.ContentCreate, db: Session = Depends(get_db)):
+    db_content = db.query(models.Content).filter(models.Content.material_id == content_id).first()
+    if db_content is None:
+        raise HTTPException(status_code=404, detail="Content not found")
+    for key, value in content.dict().items():
+        setattr(db_content, key, value)
+    db.commit()
+    db.refresh(db_content)
+    return db_content
+
+@app.delete("/contents/{content_id}", response_model=schemas.Content)
+def delete_content(content_id: int, db: Session = Depends(get_db)):
+    db_content = db.query(models.Content).filter(models.Content.material_id == content_id).first()
+    if db_content is None:
+        raise HTTPException(status_code=404, detail="Content not found")
+    db.delete(db_content)
+    db.commit()
+    return db_content
