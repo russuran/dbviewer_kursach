@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 
 const GroupList = () => {
@@ -19,6 +20,10 @@ const GroupList = () => {
         };
         fetchGroups();
     }, []);
+
+    const handleEdit = (student) => {
+        console.log("Редактировать студента:", student);
+    };
 
     const header = (
         <div className="table-header">
@@ -59,6 +64,17 @@ const GroupList = () => {
                     field="course_name" 
                     header="Название Курса" 
                     filter 
+                />
+                <Column
+                    header="Действия"
+                    body={(rowData) => (
+                        <Button
+                            label="Редактировать"
+                            icon="pi pi-pencil"
+                            onClick={() => handleEdit(rowData)}
+                        />
+                    )}
+                    style={{ minWidth: '8rem' }}
                 />
             </DataTable>
         </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 
 const AttendanceLogList = () => {
@@ -17,6 +18,10 @@ const AttendanceLogList = () => {
         };
         fetchAttendanceLogs();
     }, []);
+
+    const handleEdit = (student) => {
+        console.log("Редактировать студента:", student);
+    };
 
     const header = (
         <div className="table-header">
@@ -69,6 +74,17 @@ const AttendanceLogList = () => {
                     field="attendance_status" 
                     header="Статус" 
                     filter 
+                />
+                <Column
+                    header="Действия"
+                    body={(rowData) => (
+                        <Button
+                            label="Редактировать"
+                            icon="pi pi-pencil"
+                            onClick={() => handleEdit(rowData)}
+                        />
+                    )}
+                    style={{ minWidth: '8rem' }}
                 />
             </DataTable>
         </div>
