@@ -176,6 +176,7 @@ const StudentList = () => {
                         <InputText 
                             value={selectedStudent?.login} 
                             onChange={(e) => setSelectedStudent({ ...selectedStudent, login: e.target.value })} 
+                            disabled
                         />
                     </div>
                     <div style={{ display: 'flex', alignItems: 'baseline',  justifyContent: 'space-between', marginTop: '20px', gap: '20px'}}>
