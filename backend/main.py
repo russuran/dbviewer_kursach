@@ -34,8 +34,8 @@ def read_student(login: str, db: Session = Depends(get_db)):
     return db_student
 
 @app.get("/students/", response_model=list[schemas.Student])
-def read_students(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    students = db.query(models.Student).offset(skip).limit(limit).all()
+def read_students(db: Session = Depends(get_db)):
+    students = db.query(models.Student).all()
     return students
 
 @app.put("/students/{login}", response_model=schemas.Student)
@@ -75,8 +75,8 @@ def read_course(name: str, db: Session = Depends(get_db)):
     return db_course
 
 @app.get("/courses/", response_model=list[schemas.Course])
-def read_courses(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    courses = db.query(models.Course).offset(skip).limit(limit).all()
+def read_courses(db: Session = Depends(get_db)):
+    courses = db.query(models.Course).all()
     return courses
 
 @app.put("/courses/{name}", response_model=schemas.Course)
@@ -116,8 +116,8 @@ def read_lesson(lesson_id: int, db: Session = Depends(get_db)):
     return db_lesson
 
 @app.get("/lessons/", response_model=list[schemas.Lesson])
-def read_lessons(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    lessons = db.query(models.Lesson).offset(skip).limit(limit).all()
+def read_lessons(db: Session = Depends(get_db)):
+    lessons = db.query(models.Lesson).all()
     return lessons
 
 @app.put("/lessons/{lesson_id}", response_model=schemas.Lesson)
@@ -157,8 +157,8 @@ def read_teacher(teacher_id: int, db: Session = Depends(get_db)):
     return db_teacher
 
 @app.get("/teachers/", response_model=list[schemas.Teacher])
-def read_teachers(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    teachers = db.query(models.Teacher).offset(skip).limit(limit).all()
+def read_teachers(db: Session = Depends(get_db)):
+    teachers = db.query(models.Teacher).all()
     return teachers
 
 @app.put("/teachers/{teacher_id}", response_model=schemas.Teacher)
@@ -184,6 +184,7 @@ def delete_teacher(teacher_id: int, db: Session = Depends(get_db)):
 # Учебные материалы
 @app.post("/study_materials/", response_model=schemas.StudyMaterial)
 def create_study_material(material: schemas.StudyMaterialCreate, db: Session = Depends(get_db)):
+    print(material.dict())
     db_material = models.StudyMaterial(**material.dict())
     db.add(db_material)
     db.commit()
@@ -198,8 +199,8 @@ def read_study_material(material_id: int, db: Session = Depends(get_db)):
     return db_material
 
 @app.get("/study_materials/", response_model=list[schemas.StudyMaterial])
-def read_study_materials(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    materials = db.query(models.StudyMaterial).offset(skip).limit(limit).all()
+def read_study_materials(db: Session = Depends(get_db)):
+    materials = db.query(models.StudyMaterial).all()
     return materials
 
 @app.put("/study_materials/{material_id}", response_model=schemas.StudyMaterial)
@@ -239,8 +240,8 @@ def read_schedule(schedule_id: int, db: Session = Depends(get_db)):
     return db_schedule
 
 @app.get("/schedules/", response_model=list[schemas.Schedule])
-def read_schedules(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    schedules = db.query(models.Schedule).offset(skip).limit(limit).all()
+def read_schedules(db: Session = Depends(get_db)):
+    schedules = db.query(models.Schedule).all()
     return schedules
 
 @app.put("/schedules/{schedule_id}", response_model=schemas.Schedule)
@@ -279,8 +280,8 @@ def read_group(group_number: int, db: Session = Depends(get_db)):
     return db_group
 
 @app.get("/groups/", response_model=list[schemas.Group])
-def read_groups(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    groups = db.query(models.Group).offset(skip).limit(limit).all()
+def read_groups(db: Session = Depends(get_db)):
+    groups = db.query(models.Group).all()
     return groups
 
 
@@ -321,8 +322,8 @@ def read_performance(performance_id: int, db: Session = Depends(get_db)):
     return db_performance
 
 @app.get("/performances/", response_model=list[schemas.Performance])
-def read_performances(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    performances = db.query(models.Performance).offset(skip).limit(limit).all()
+def read_performances(db: Session = Depends(get_db)):
+    performances = db.query(models.Performance).all()
     return performances
 
 @app.put("/performances/{performance_id}", response_model=schemas.Performance)
@@ -362,8 +363,8 @@ def read_attendance_log(attendance_id: int, db: Session = Depends(get_db)):
     return db_attendance_log
 
 @app.get("/attendance_logs/", response_model=list[schemas.AttendanceLog])
-def read_attendance_logs(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    attendance_logs = db.query(models.AttendanceLog).offset(skip).limit(limit).all()
+def read_attendance_logs(db: Session = Depends(get_db)):
+    attendance_logs = db.query(models.AttendanceLog).all()
     return attendance_logs
 
 @app.put("/attendance_logs/{attendance_id}", response_model=schemas.AttendanceLog)
@@ -402,8 +403,8 @@ def read_content(content_id: int, db: Session = Depends(get_db)):
     return db_content
 
 @app.get("/contents/", response_model=list[schemas.Content])
-def read_contents(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    contents = db.query(models.Content).offset(skip).limit(limit).all()
+def read_contents(db: Session = Depends(get_db)):
+    contents = db.query(models.Content).all()
     return contents
 
 @app.put("/contents/{content_id}", response_model=schemas.Content)

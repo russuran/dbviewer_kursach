@@ -10,7 +10,7 @@ class Student(Base):
     full_name = Column(String(255), nullable=False)
     contact_info = Column(String(255), nullable=False, unique=True)
     password = Column(String(255), nullable=False)
-    group_number = Column(Integer, ForeignKey('Group.group_number'), nullable=False)
+    group_number = Column(String, ForeignKey('Group.group_number'), nullable=False)
     
     __table_args__ = (
         CheckConstraint('LENGTH(password) >= 8', name='check_password_length'),
@@ -68,7 +68,7 @@ class Schedule(Base):
 class Group(Base):
     __tablename__ = 'Group'
     
-    group_number = Column(Integer, primary_key=True, nullable=False)
+    group_number = Column(String, primary_key=True, nullable=False)
     course_name = Column(String(255), ForeignKey('Course.name'), nullable=False)
 
 class Performance(Base):
@@ -102,6 +102,6 @@ class Content(Base):
     material_id = Column(Integer, ForeignKey('StudyMaterial.material_id'), nullable=False)
     
     __table_args__ = (
-        Column('name', String(255), primary_key=True),
-        Column('material_id', Integer, primary_key=True),
+        Column('name1', String(255), primary_key=True),   #TODO: dafuck?
+        Column('material_id1', Integer, primary_key=True),
     )

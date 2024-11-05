@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -13,6 +13,9 @@ const LessonList = () => {
         course_name: { value: null, matchMode: 'contains' },
         date: { value: null, matchMode: 'contains' },
     });
+
+    const [isAddDialogVisible, setIsAddDialogVisible] = useState(false);
+    const toast = useRef(null);
 
     useEffect(() => {
         const fetchLessons = async () => {
@@ -29,6 +32,7 @@ const LessonList = () => {
     const header = (
         <div className="table-header">
             <h2>Уроки</h2>
+            <Button label="" icon="pi pi-plus" onClick={() => setIsAddDialogVisible(true)} style={{ marginRight: '20px' }}/>
             <span className="p-input-icon-left">
                 <InputText
                     type="search"

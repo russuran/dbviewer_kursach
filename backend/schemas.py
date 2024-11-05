@@ -8,7 +8,7 @@ class StudentCreate(BaseModel):
     full_name: constr(max_length=255)
     contact_info: constr(max_length=255)
     password: constr(min_length=8)
-    group_number: int
+    group_number: str
 
 class Student(StudentCreate):
     class Config:
@@ -38,21 +38,22 @@ class Lesson(LessonCreate):
 
 # Модель для преподавателя
 class TeacherCreate(BaseModel):
-    teacher_id: int
     full_name: constr(max_length=255)
     contact_info: constr(max_length=255)
     qualification: Optional[constr(max_length=255)] = None
 
 class Teacher(TeacherCreate):
+    teacher_id: int
+    
     class Config:
         from_attributes = True
 
 # Модель для учебного материала
 class StudyMaterialCreate(BaseModel):
-    material_id: int
     name: constr(max_length=255)
 
 class StudyMaterial(StudyMaterialCreate):
+    material_id: int
     class Config:
         from_attributes = True
 
@@ -79,12 +80,15 @@ class Group(GroupCreate):
 
 # Модель для успеваемости
 class PerformanceCreate(BaseModel):
-    performance_id: int
     login: constr(max_length=255)
     grade: int
     lesson_id: int
 
 class Performance(PerformanceCreate):
+    performance_id: int
+    login: constr(max_length=255)
+    grade: int
+    lesson_id: int
     class Config:
         from_attributes = True
 
