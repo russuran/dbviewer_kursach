@@ -48,7 +48,7 @@ const LessonList = () => {
 
     return (
         <div style={{ padding: '8px' }}>
-            <DataTable 
+            <DataTable  showGridlines 
                 removableSort 
                 value={lessons} 
                 paginator 

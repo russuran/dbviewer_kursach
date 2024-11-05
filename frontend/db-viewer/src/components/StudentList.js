@@ -105,7 +105,7 @@ const StudentList = () => {
     return (
         <div style={{ padding: '8px' }}>
             <Toast ref={toast} />
-            <DataTable
+            <DataTable  showGridlines
                 value={students}
                 paginator
                 rows={10}

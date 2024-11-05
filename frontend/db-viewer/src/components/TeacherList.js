@@ -85,7 +85,7 @@ const TeacherList = () => {
     return (
         <div style={{ padding: '8px' }}>
             <Toast ref={toast} />
-            <DataTable 
+            <DataTable  showGridlines 
                 removableSort 
                 value={teachers} 
                 paginator 

@@ -94,12 +94,12 @@ class Performance(PerformanceCreate):
 
 # Модель для журнала посещений
 class AttendanceLogCreate(BaseModel):
-    attendance_id: int
     login: constr(max_length=255)
     attendance_status: constr(max_length=20) = 'Absent'
     lesson_id: int
 
 class AttendanceLog(AttendanceLogCreate):
+    attendance_id: int
     class Config:
         from_attributes = True
 

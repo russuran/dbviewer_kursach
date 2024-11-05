@@ -30,7 +30,7 @@ const ContentList = () => {
 
     const header = (
         <div className="table-header">
-            <h2>Содержимое</h2>
+            <h2>Содержание</h2>
             <Button label="" icon="pi pi-plus" onClick={() => setIsAddDialogVisible(true)} style={{ marginRight: '20px' }}/>
             <span className="p-input-icon-left">
                 <InputText
@@ -47,7 +47,7 @@ const ContentList = () => {
 
     return (
         <div style={{ padding: '8px' }}>
-            <DataTable 
+            <DataTable  showGridlines 
                 removableSort 
                 value={contents} 
                 paginator 
