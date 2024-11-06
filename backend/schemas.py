@@ -30,7 +30,7 @@ class Course(CourseCreate):
 class LessonCreate(BaseModel):
     lesson_id: int
     course_name: constr(max_length=255)
-    date: date
+    date: str
 
 class Lesson(LessonCreate):
     class Config:
@@ -109,5 +109,6 @@ class ContentCreate(BaseModel):
     material_id: int
 
 class Content(ContentCreate):
+    id: int
     class Config:
         from_attributes = True

@@ -38,7 +38,7 @@ const TeacherList = () => {
 
     const handleUpdate = async () => {
         try {
-            await axios.put(`http://127.0.0.1:8000/teachers/${selectedTeacher.teacher_id}`, selectedTeacher);
+            await axios.put(`http://127.0.0.1:8000/teachers${selectedTeacher.teacher_id}`, selectedTeacher);
             setTeachers((prevTeachers) => 
                 prevTeachers.map((teacher) => 
                     teacher.teacher_id === selectedTeacher.teacher_id ? selectedTeacher : teacher

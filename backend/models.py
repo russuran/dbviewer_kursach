@@ -35,7 +35,7 @@ class Lesson(Base):
     
     lesson_id = Column(Integer, primary_key=True, nullable=False)
     course_name = Column(String(255), ForeignKey('Course.name'), nullable=False)
-    date = Column(Date, nullable=False)
+    date = Column(String(10), nullable=False)
 
 class Teacher(Base):
     __tablename__ = 'Teacher'
@@ -98,10 +98,7 @@ class AttendanceLog(Base):
 class Content(Base):
     __tablename__ = 'Content'
     
+    id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
     material_id = Column(Integer, ForeignKey('StudyMaterial.material_id'), nullable=False)
     
-    __table_args__ = (
-        Column('name1', String(255), primary_key=True),   #TODO: dafuck?
-        Column('material_id1', Integer, primary_key=True),
-    )

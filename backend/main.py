@@ -397,7 +397,7 @@ def create_content(content: schemas.ContentCreate, db: Session = Depends(get_db)
 
 @app.get("/contents/{content_id}", response_model=schemas.Content)
 def read_content(content_id: int, db: Session = Depends(get_db)):
-    db_content = db.query(models.Content).filter(models.Content.material_id == content_id).first()
+    db_content = db.query(models.Content).filter(models.Content.id == content_id).first()
     if db_content is None:
         raise HTTPException(status_code=404, detail="Content not found")
     return db_content
@@ -409,7 +409,7 @@ def read_contents(db: Session = Depends(get_db)):
 
 @app.put("/contents/{content_id}", response_model=schemas.Content)
 def update_content(content_id: int, content: schemas.ContentCreate, db: Session = Depends(get_db)):
-    db_content = db.query(models.Content).filter(models.Content.material_id == content_id).first()
+    db_content = db.query(models.Content).filter(models.Content.id == content_id).first()
     if db_content is None:
         raise HTTPException(status_code=404, detail="Content not found")
     for key, value in content.dict().items():

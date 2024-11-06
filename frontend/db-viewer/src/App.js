@@ -1,16 +1,20 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import StudentList from './components/StudentList';
-import CourseList from './components/CourseList';
-import GroupList from './components/GroupList';
-import PerformanceList from './components/PerformanceList';
-import AttendanceLogList from './components/AttendanceLogList';
-import LessonList from './components/LessonList'
-import ContentList from './components/ContentList'
 import ScheduleList from './components/ScheduleList'
-import TeacherList from './components/TeacherList'
-import StudyMaterialList from './components/StudyMaterialList'
+
+import DataTableComponent from './components/DataTableComponent';
+import { 
+    studentConfig, 
+    groupConfig, 
+    attendanceLogConfig, 
+    courseConfig, 
+    contentConfig, 
+    lessonConfig, 
+    performanceConfig, 
+    studyMaterialConfig, 
+    teacherConfig
+} from './config';
 
 
 const App = () => {
@@ -19,16 +23,16 @@ const App = () => {
             <Navbar />
             <div className="container">
                 <Routes>
-                    <Route path="/students" element={<StudentList />} />
-                    <Route path="/courses" element={<CourseList />} />
-                    <Route path="/groups" element={<GroupList />} />
-                    <Route path="/performances" element={<PerformanceList />} />
-                    <Route path="/attendance_logs" element={<AttendanceLogList />} />
-                    <Route path="/lessons" element={<LessonList />} />
-                    <Route path="/contents" element={<ContentList />} />
+                    <Route path="/students" element={<DataTableComponent config={studentConfig} />} />
+                    <Route path="/courses" element={<DataTableComponent config={courseConfig} />} />
+                    <Route path="/groups" element={<DataTableComponent config={groupConfig} />} />
+                    <Route path="/performances" element={<DataTableComponent config={performanceConfig} />} />
+                    <Route path="/attendance_logs" element={<DataTableComponent config={attendanceLogConfig} />} />
+                    <Route path="/lessons" element={<DataTableComponent config={lessonConfig} />} />
+                    <Route path="/contents" element={<DataTableComponent config={contentConfig} />} />
                     <Route path="/schedule" element={<ScheduleList />} />
-                    <Route path="/teachers" element={<TeacherList />} />
-                    <Route path="/sml" element={<StudyMaterialList />} />
+                    <Route path="/teachers" element={<DataTableComponent config={teacherConfig} />} />
+                    <Route path="/sml" element={<DataTableComponent config={studyMaterialConfig} />} />
                     <Route path="/" element={<h1>Система менеджмента учащихся v1</h1>} />
                 </Routes>
             </div>
