@@ -38,7 +38,6 @@ const DataTableComponent = ({ config }) => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log(response.data);
                 setData(response.data);
             } catch (error) {
                 console.error('Ошибка при загрузке данных', error);
@@ -54,12 +53,26 @@ const DataTableComponent = ({ config }) => {
         setIsModalOpenEdit(true);
     };
 
+    const handleDelete = async (item) => {
+        try {
+            setSelectedItem(item);
+            await axios.delete(`${config.apiEndpoint}${item[config.edit_key]}`);
+            
+            setData((prevData) =>
+                prevData.filter((prevItem) => prevItem[config.edit_key] !== item[config.edit_key])
+            );
+    
+            toast.current.show({ severity: 'success', summary: 'Успех', detail: 'Запись удалена', life: 3000 });
+        } catch (error) {
+            console.error("Ошибка при удалении записи:", error);
+            toast.current.show({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось удалить запись', life: 3000 });
+        }
+    };
+    
+
     const handleUpdate = async () => {
-        console.log(selectedItem);
         try {
             await axios.put(`${config.apiEndpoint}${selectedItem[config.edit_key]}`, newItem, {});
-
-            console.log(selectedItem);
 
             setData((prevData) =>
                 prevData.map((item) => (item[config.edit_key] === selectedItem[config.edit_key] ? newItem : item))
@@ -131,11 +144,18 @@ const DataTableComponent = ({ config }) => {
                 <Column
                     header="Действия"
                     body={(rowData) => (
+                        <div style={{ display: 'flex', gap: '20px'}}>
                         <Button
                             label="Редактировать"
                             icon="pi pi-pencil"
                             onClick={() => handleEdit(rowData)}
                         />
+                        <Button
+                            label="Удалить"
+                            icon="pi pi-times"
+                            onClick={() => handleDelete(rowData)}
+                        />
+                        </div>
                     )}
                     style={{ minWidth: '8rem' }}
                 />

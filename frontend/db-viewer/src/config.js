@@ -190,7 +190,6 @@ export const contentConfig = {
 export const attendanceLogConfig = {
     apiEndpoint: 'http://127.0.0.1:8000/attendance_logs/',
     columns: [
-        //{ field: 'attendance_id', header: 'ID Посещаемости', sortable: true, filter: true },
         { field: 'login', header: 'Логин Студента', sortable: true, filter: true },
         { field: 'lesson_id', header: 'ID Урока', sortable: true, filter: true },
         { field: 'attendance_status', header: 'Статус', sortable: true, filter: true },

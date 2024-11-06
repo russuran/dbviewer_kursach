@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.react-kanban-column {
+  background-color: #1E1E1E;
+  color: white;
+}
+
+.react-kanban-card  {
+  background-color: #111010 !important;
+}
