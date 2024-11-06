@@ -27,7 +27,6 @@ const initialBoard = {
         },
       ]
     },
-    // Добавьте другие дни недели по аналогии
   ]
 };
 
@@ -39,7 +38,7 @@ const Board = () => {
     const description = prompt('Введите описание карточки:');
     if (title) {
       const newCard = {
-        id: Date.now(), // Используем timestamp как уникальный ID
+        id: Date.now(),
         title,
         description
       };
@@ -68,7 +67,7 @@ const Board = () => {
               style={{ padding: '3px', width: '30px', height: '30px' }}
               label=""
               icon="pi pi-plus"
-              onClick={() => addCard(id)} // Передаем id колонки
+              onClick={() => addCard(id)}
             />
           </div>
         )}
