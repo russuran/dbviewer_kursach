@@ -1,3 +1,5 @@
+import axios from "axios";
+
 function formatDate(date) {
     const day = String(date.getDate()).padStart(2, '0'); // Получаем день и добавляем ведущий ноль
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Получаем месяц (0-11) и добавляем ведущий ноль
@@ -5,12 +7,17 @@ function formatDate(date) {
     return `${day}.${month}.${year}`; // Форматируем строку
 }
 
+const fetchGroupOptions = async () => {
+    const response = await axios.get('http://127.0.0.1:8000/group_options');
+    return response.data;
+};
 
+const groupsOptions = fetchGroupOptions();
 
 export const teacherConfig = {
     apiEndpoint: 'http://127.0.0.1:8000/teachers/',
     columns: [
-        { field: 'teacher_id', header: 'ID Преподавателя', sortable: true, filter: true },
+        { field: 'teacher_id', header: 'ID Преподавателя', sortable: true, filter: true, disabled: true },
         { field: 'full_name', header: 'ФИО', sortable: true, filter: true },
         { field: 'contact_info', header: 'Контактная информация', sortable: true, filter: true },
         { field: 'qualification', header: 'Квалификация', sortable: true, filter: true },
@@ -70,12 +77,19 @@ export const studentConfig = {
     edit_key: 'login'
 };
 
+const fetchPerformanceOptions = async () => {
+    const response = await axios.get('http://127.0.0.1:8000/perfomance_options');
+    return response.data;
+};
+
+const performanceOptions = await fetchPerformanceOptions();
+
 export const performanceConfig = {
     apiEndpoint: 'http://127.0.0.1:8000/performances/',
     columns: [
         { field: 'performance_id', header: 'ID оценки', sortable: true, filter: true, disabled: true },
         { field: 'login', header: 'Логин Студента', sortable: true, filter: true },
-        { field: 'lesson_id', header: 'ID Занятия', sortable: true, filter: true },
+        { field: 'lesson_id', header: 'ID Занятия', sortable: true, filter: true, dropdown: { options: performanceOptions } },
         { field: 'grade', header: 'Оценка', sortable: true, filter: true },
     ],
     initialState: {
@@ -94,11 +108,19 @@ export const performanceConfig = {
     edit_key: 'performance_id'
 };
 
+
+const fetchCourseOptions = async () => {
+    const response = await axios.get('http://127.0.0.1:8000/course_options');
+    return response.data;
+};
+
+const courseOptions = await fetchCourseOptions();
+
 export const lessonConfig = {
     apiEndpoint: 'http://127.0.0.1:8000/lessons/',
     columns: [
-        { field: 'lesson_id', header: 'ID Урока', sortable: true, filter: true },
-        { field: 'course_name', header: 'Название Курса', sortable: true, filter: true },
+        // { field: 'lesson_id', header: 'ID Урока', sortable: true, filter: true, disabled: true },
+        { field: 'course_name', header: 'Название Курса', sortable: true, filter: true, dropdown: { options: courseOptions } },
         { field: 'date', header: 'Дата', sortable: true, filter: true,
             format: (rowData) => {
                 const date = new Date(rowData.date);
@@ -126,8 +148,8 @@ export const lessonConfig = {
 export const groupConfig = {
     apiEndpoint: 'http://127.0.0.1:8000/groups/',
     columns: [
-        { field: 'group_number', header: 'Номер Группы', sortable: true, filter: true },
-        { field: 'course_name', header: 'Название Курса', sortable: true, filter: true },
+        { field: 'group_number', header: 'Номер Группы', sortable: true, filter: true, dropdown: { options : groupsOptions } },
+        { field: 'course_name', header: 'Название Курса', sortable: true, filter: true, dropdown: { options : courseOptions } },
     ],
     initialState: {
         group_number: 0,
@@ -141,6 +163,13 @@ export const groupConfig = {
     edit_key: 'group_number'
 };
 
+const fetchTeacherOptions = async () => {
+    const response = await axios.get('http://127.0.0.1:8000/teachers_options');
+    return response.data;
+};
+
+const teacherOptions = await fetchTeacherOptions();
+
 export const courseConfig = {
     apiEndpoint: 'http://127.0.0.1:8000/courses/',
     columns: [
@@ -148,7 +177,13 @@ export const courseConfig = {
         { field: 'description', header: 'Описание', sortable: true, filter: true },
         { field: 'duration', header: 'Продолжительность (часы)', sortable: true, filter: true },
         { field: 'cost', header: 'Стоимость', sortable: true, filter: true },
-        { field: 'teacher_id', header: 'ID Преподавателя', sortable: true, filter: true },
+        { 
+            field: 'teacher_id',
+            header: 'ID Преподавателя',
+            sortable: true,
+            filter: true,
+            dropdown: { options: teacherOptions }
+        }
     ],
     initialState: {
         name: '',
@@ -165,14 +200,23 @@ export const courseConfig = {
         duration: { value: null, matchMode: 'contains' },
         teacher_id: { value: null, matchMode: 'contains' }
     },
-    edit_key: 'name'
+    edit_key: 'name',
 };
+
+
+const fetchMaterialsOptions = async () => {
+    const response = await axios.get('http://127.0.0.1:8000/materials_options');
+    return response.data;
+};
+
+const materialsOptions = await fetchMaterialsOptions();
+
 
 export const contentConfig = {
     apiEndpoint: 'http://127.0.0.1:8000/contents/',
     columns: [
         { field: 'name', header: 'Название', sortable: true, filter: true },
-        { field: 'material_id', header: 'ID Материала', sortable: true, filter: true, disabled: true },
+        { field: 'material_id', header: 'ID Материала', sortable: true, filter: true, dropdown: { options: materialsOptions }},
     ],
     initialState: {
         id: '',
@@ -206,3 +250,24 @@ export const attendanceLogConfig = {
     edit_key: 'attendance_id'
 };
 
+
+export const filters = {
+    global: { value: null, matchMode: 'contains' },
+    teacher_id: { value: null, matchMode: 'contains' },
+    attendance_id: { value: null, matchMode: 'contains' },
+    login: { value: null, matchMode: 'contains' },
+    attendance_status: { value: null, matchMode: 'contains' },
+    lesson_id: { value: null, matchMode: 'contains' },
+    material_id: { value: null, matchMode: 'contains' },
+    name: { value: null, matchMode: 'contains' },
+    description: { value: null, matchMode: 'contains' },
+    cost: { value: null, matchMode: 'contains' },
+    duration: { value: null, matchMode: 'contains' },
+    group_number: { value: null, matchMode: 'contains' },
+    course_name: { value: null, matchMode: 'contains' },
+    date: { value: null, matchMode: 'contains' },
+    full_name: { value: null, matchMode: 'contains' },
+    contact_info: { value: null, matchMode: 'contains' },
+    qualification: { value: null, matchMode: 'contains' },
+
+}

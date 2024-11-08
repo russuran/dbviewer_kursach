@@ -12,11 +12,46 @@ code {
     monospace;
 }
 
-.react-kanban-column {
-  background-color: #1E1E1E;
-  color: white;
+/* src/components/ScheduleGrid.css */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr); /* 1 колонка для времени и 7 для дней недели */
+  gap: 1px; /* Промежуток между ячейками */
+  background-color: #ccc; /* Цвет фона для сетки */
 }
 
-.react-kanban-card  {
-  background-color: #111010 !important;
+.header {
+  background-color: #f0f0f0; /* Цвет фона для шапки */
+  font-weight: bold;
+}
+
+.empty-cell {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc; /* Граница ячейки */
+}
+
+.time-slot {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc; /* Граница ячейки */
+}
+
+.day {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc; /* Граница ячейки */
+}
+
+.body {
+  background-color: #fff; /* Цвет фона для тела */
+}
+
+.time-row {
+  display: contents; /* Позволяет использовать grid для строк */
+}
+
+.cell {
+  height: 50px; /* Высота ячейки */
+  border: 1px solid #ccc; /* Граница ячейки */
 }

@@ -77,6 +77,10 @@ def read_course(name: str, db: Session = Depends(get_db)):
 @app.get("/courses/", response_model=list[schemas.Course])
 def read_courses(db: Session = Depends(get_db)):
     courses = db.query(models.Course).all()
+
+    for i in range(len(courses)):
+        courses[i].teacher_id = db.query(models.Teacher).filter(models.Teacher.teacher_id == courses[i].teacher_id).first().full_name
+
     return courses
 
 @app.put("/courses/{name}", response_model=schemas.Course)
@@ -184,7 +188,6 @@ def delete_teacher(teacher_id: int, db: Session = Depends(get_db)):
 # Учебные материалы
 @app.post("/study_materials/", response_model=schemas.StudyMaterial)
 def create_study_material(material: schemas.StudyMaterialCreate, db: Session = Depends(get_db)):
-    print(material.dict())
     db_material = models.StudyMaterial(**material.dict())
     db.add(db_material)
     db.commit()
@@ -426,3 +429,29 @@ def delete_content(content_id: int, db: Session = Depends(get_db)):
     db.delete(db_content)
     db.commit()
     return db_content
+
+
+#utils: id to names
+@app.get("/teachers_options")
+def teacher_id_to_name(db: Session = Depends(get_db)):    
+    return [{'label': teacher.full_name, 'value': teacher.teacher_id} for teacher in db.query(models.Teacher).all()]
+
+
+@app.get("/perfomance_options")
+def perfomance_options(db: Session = Depends(get_db)):    
+    return [{'label': lesson.course_name, 'value': lesson.lesson_id} for lesson in db.query(models.Lesson).all()]
+
+
+@app.get("/materials_options")
+def materials_options(db: Session = Depends(get_db)):    
+    return [{'label': material.name, 'value': material.material_id} for material in db.query(models.StudyMaterial).all()]
+
+
+@app.get("/course_options")
+def course_options(db: Session = Depends(get_db)):    
+    return [{'label': course.name, 'value': course.name} for course in db.query(models.Course).all()]
+
+
+@app.get("/group_options")
+def group_options(db: Session = Depends(get_db)):    
+    return [{'label': group.group_number, 'value': group.group_number, 'course_name': group.course_name } for group in db.query(models.Group).all()]

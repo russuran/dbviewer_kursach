@@ -6,10 +6,12 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
+import { Dropdown } from 'primereact/dropdown';
 
-const DataTableComponent = ({ config }) => {
+
+const DataTableComponent = ({ config, fitlers_to_pass }) => {
     const [data, setData] = useState([]);
-    const [filters, setFilters] = useState(config.filters);
+    const [filters, setFilters] = useState(fitlers_to_pass);
 
     const filterMatchModeOptions = {
         text: [
@@ -28,16 +30,11 @@ const DataTableComponent = ({ config }) => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [newItem, setNewItem] = useState(config.initialState);
     const toast = useRef(null);
-    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(config.apiEndpoint, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await axios.get(config.apiEndpoint, {});
                 setData(response.data);
             } catch (error) {
                 console.error('Ошибка при загрузке данных', error);
@@ -45,7 +42,7 @@ const DataTableComponent = ({ config }) => {
         };
 
         fetchData();
-    }, [token, config.apiEndpoint]);
+    }, [config.apiEndpoint]);
 
     const handleEdit = (item) => {
         setSelectedItem(item);
@@ -87,11 +84,7 @@ const DataTableComponent = ({ config }) => {
 
     const handleAdd = async () => {
         try {
-            const response = await axios.post(config.apiEndpoint, newItem, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const response = await axios.post(config.apiEndpoint, newItem, {});
             setData((prevData) => [...prevData, response.data]);
             setIsModalOpenAdd(false);
             setNewItem(config.initialState);
@@ -166,11 +159,28 @@ const DataTableComponent = ({ config }) => {
                     {config.columns.map((col) => (
                         <div key={col.field} style={{ display: 'flex', alignItems: 'baseline',  justifyContent: 'space-between', marginTop: '20px', gap: '20px'}}>
                             <label>{col.header}</label>
-                            <InputText
-                                value={newItem[col.field]}
-                                onChange={(e) => setNewItem({ ...newItem, [col.field]: e.target.value })}
-                                disabled={col.disabled}
-                            />
+                            {col.dropdown ? (
+                                col.dropdown.options ? (
+                                    <Dropdown 
+                                        style={{ width: '236px' }}
+                                        value={newItem[col.field]} 
+                                        onChange={(e) => setNewItem({ ...newItem, [col.field]: e.target.value })}
+                                        options={col.dropdown.options} 
+                                        checkmark={true}  
+                                        highlightOnSelect={false} 
+                                    />
+                                ) : (
+                                    <div>Загрузка опций</div>
+                                )
+                            ) : (
+                                <InputText
+                                    style={{ width: '236px' }}
+                                    value={newItem[col.field]}
+                                    onChange={(e) => setNewItem({ ...newItem, [col.field]: e.target.value })}
+                                    disabled={col.disabled}
+                                />
+                            )}
+
                         </div>
                     ))}
                 </div>
@@ -185,11 +195,29 @@ const DataTableComponent = ({ config }) => {
                     {config.columns.map((col) => (
                         <div key={col.field} style={{ display: 'flex', alignItems: 'baseline',  justifyContent: 'space-between', marginTop: '20px', gap: '20px'}}>
                             <label>{col.header}</label>
-                            <InputText
-                                value={newItem[col.field]}
-                                onChange={(e) => setNewItem({ ...newItem, [col.field]: e.target.value })}
-                                disabled={col.disabled}
-                            />
+
+                            {col.dropdown ? (
+                                col.dropdown.options ? (
+                                    <Dropdown 
+                                        style={{ width: '236px' }}
+                                        value={newItem[col.field]}
+                                        onChange={(e) => setNewItem({ ...newItem, [col.field]: e.target.value })}
+                                        options={col.dropdown.options} 
+                                        checkmark={true}  
+                                        highlightOnSelect={false} 
+                                    />
+                                ) : (
+                                    <div>Загрузка опций</div>
+                                )
+                            ) : (
+                                <InputText
+                                    style={{ width: '236px' }}
+                                    value={newItem[col.field]}
+                                    onChange={(e) => setNewItem({ ...newItem, [col.field]: e.target.value })}
+                                    disabled={col.disabled}
+                                />
+                            )}
+
                         </div>
                     ))}
                 </div>

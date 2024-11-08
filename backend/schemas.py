@@ -28,11 +28,11 @@ class Course(CourseCreate):
 
 # Модель для занятия
 class LessonCreate(BaseModel):
-    lesson_id: int
     course_name: constr(max_length=255)
     date: str
 
 class Lesson(LessonCreate):
+    lesson_id: int
     class Config:
         from_attributes = True
 
@@ -59,7 +59,6 @@ class StudyMaterial(StudyMaterialCreate):
 
 # Модель для расписания
 class ScheduleCreate(BaseModel):
-    schedule_id: int
     group_number: constr(max_length=255)
     time: time
     weekday: constr(max_length=20)

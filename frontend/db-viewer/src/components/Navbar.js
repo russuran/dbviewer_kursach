@@ -35,11 +35,6 @@ const Navbar = () => {
             path: '/teachers'
         },
         {
-            label: 'Курсы',
-            icon: 'pi pi-fw pi-folder',
-            path: '/courses'
-        },
-        {
             label: 'Занятия',
             icon: 'pi pi-fw pi-save',
             path: '/lessons'
